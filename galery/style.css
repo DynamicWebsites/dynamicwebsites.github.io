@@ -1,0 +1,117 @@
+body {
+    background-color: rgb(36, 36, 51);
+    margin: 0;
+    max-width: 1500px;
+    min-width: 900px;
+    color: azure;
+    margin: auto;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header {
+    background-color: rgb(24, 24, 39);
+    display: flex;
+    flex-basis: 0;
+    justify-items: center;
+}
+
+header h1 {
+    margin: 0;
+    float: left;
+    padding: 15px 20px;
+}
+
+h1 span {
+    color: darkcyan;
+    text-decoration-color: darkcyan;
+}
+
+article h1 {
+    font-weight: bold;
+    font-size: 50px;
+    text-align: center;
+    border: 3px dashed azure;
+    padding: 10px 0;
+    width: 750px;
+    margin: 20px auto;
+}
+
+article {
+    width: 75%;
+    margin: auto;
+    font-size: 30px;
+}
+
+header nav {
+    background-color: darkcyan;
+    flex-grow: 1;
+    width: fit-content;
+    display: flex;
+    justify-items: auto;
+    align-content: stretch;
+}
+
+header ul {
+    padding-left: 0;
+    flex-grow: 1;
+    display: flex;
+    list-style: none;
+    margin: 0;
+    justify-content: space-between;
+    align-content: stretch;
+}
+
+header li {
+    flex-grow: 1;
+    align-self: center;
+    width: 25%;
+    display: inline-block;
+    text-align: center;
+    display: flex;
+    height: fit-content;
+}
+
+header a {
+    color: azure;
+    text-decoration: none;
+}
+
+header nav a {
+    width: fit-content;
+    flex-grow: 1;
+    padding: 15px 10px;
+    color: azure;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+header nav a:hover {
+    background-color: cadetblue;
+}
+
+h2 {
+    font-size: 50px;
+    margin: 5px;
+}
+
+pre {
+    font-size: 30px;
+    margin: auto;
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+}
+
+.art {
+    border: 8px solid azure;
+    margin: 20px 0;
+}
+
+.art h1 {
+    text-align: center;
+    font-size: 40px;
+}
+
+.art span {
+    text-decoration: underline;
+}
