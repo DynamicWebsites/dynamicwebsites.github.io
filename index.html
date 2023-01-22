@@ -1,47 +1,70 @@
-<!DOCTYPE html>
-<html>
+<h1>Komunikator</h1>
+<pre id="messages" style="height: 400px; overflow: scroll;"></pre>
+<input type="text" id="nickname" placeholder="Napisz nick tutaj" style="display: block; width: 20%; margin-bottom: 10px; padding: 10px;">
+<input type="text" id="messageBox" placeholder="Napisz wiadomość tutaj" style="display: block; width: 100%; margin-bottom: 10px; padding: 10px;">
 
-<head>
-    <meta charset="utf-8">
-    <title>Hall of Sus</title>
-    <link rel="icon" href="https://cdn.freebiesupply.com/logos/large/2x/s-bahn-1-logo-png-transparent.png">
-    <link rel="stylesheet" href="style.css">
-</head>
+<button id="send" title="Send Message!" style="width: 100%; height: 30px;">Send Message</button>
 
-<body>
-    <div id="content">
-        <header>
-            <h1><a href="../main_page/index.html">Hall of Sus</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="galery/index.html">Gallery</a></li>
-                    <li><a href="shop/index.html">Shop</a></li>
-                    <li><a href="#">Proofs</a></li>
-                    <li><a href="secrets/index.html">Secrets</a></li>
-                </ul>
-            </nav>
-        </header>
+<script>
+    (function() {
+        const sendBtn = document.querySelector('#send');
+        const messages = document.querySelector('#messages');
+        const nickname = document.querySelector('#nickname');
+        const messageBox = document.querySelector('#messageBox');
 
-        <article>
-            <h1>What is <span>"Hall of Sus"</span>?</h1>
+        let ws;
 
-            <p>
-                Hall of Sus is the official website with NO sus information, always true and interesting. You can also find here a shop with rare items, you can buy.<img id="sus_img" src="https://media.tenor.com/1t5F4JOye68AAAAC/amogus-sus.gif">
-            </p>
-            <a id="show_more">
-                Show More...
-            </a>
-        </article>
+        function showMessage(message, nick) {
+            messages.textContent += `\n\n${message}`;
+            messages.scrollTop = messages.scrollHeight;
+            messageBox.value = '';
 
-        <div id="clicker">
-            <button id="btn">Sus Button</button>
-            <h2 id="cc">Sus Counter: 0</h2>
-            <p id="clicker_comment"></p>
-        </div>
+            nickname.textContent += `\n\n${nick}`;
+            nickname.scrollTop = nickname.scrollHeight;
+        }
 
-    </div>
+        const serverAdress = 'wss://komunikator_pro.ct8.pl'
 
-    <script src="script.js" async defer></script>
-</body>
 
-</html>
+        function init() {
+            if (ws) {
+                ws.onerror = ws.onopen = ws.onclose = null;
+                ws.close();
+            }
+
+            ws = new WebSocket(serverAdress, {
+                headers: {
+                    "user-agent": "Mozilla"
+                }
+            });
+
+            ws.onopen = () => {
+                console.log('Connection opened!')
+            }
+
+            ws.onmessage = ({
+                data
+            }) => showMessage(data);
+            ws.onclose = function() {
+                ws = null;
+            }
+        }
+
+        sendBtn.onclick = function() {
+            if (!ws) {
+                showMessage("Nie połączono WebSocket:(");
+                return;
+            }
+
+            ws.send(nickname.value + ': ' + messageBox.value);
+            showMessage(nickname.value + ': ' + messageBox.value);
+
+            const reader = new FileReader();
+            reader.addEventListener("loadend", () => {
+                // reader.result contains the contents of blob as a typed array
+            });
+            reader.readAsArrayBuffer(blob);
+        }
+        init();
+    })();
+</script>
